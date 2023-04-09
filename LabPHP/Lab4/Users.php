@@ -16,7 +16,7 @@
 		<div class="container mt-3">
 			<div class="d-flex justify-content-between">
 				<span class="h2">User Details</span>
-				<a class="btn btn-success h-75" href="table.php"
+				<a class="btn btn-success h-75" href="Form.php"
 					>Add New User</a
 				>
 			</div>
