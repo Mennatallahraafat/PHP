@@ -2,32 +2,20 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
    <body>
-   <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" >Users Database</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="./Users.php" target = "blank" >Database</a></li>
-      <li><a href="./Form.php"> Registration Form </a></li>
-    </ul>
-  </div>
-</nav>
-
+   <div class="container mt-3">
+   <form action = "<?php $PHP_sELF?>" method = "POST">
    <h1>User Regestration Form</h1> 
    <br>
    <p>Please fill this form and submit to add user record to the database.</p>
 
-   <form action = "./Users.php" method = "POST">
-
   <div class=col-xs-7>
     <label for="name">Name</label>
-    <input type="text" class="form-control" name = "name" >
+    <input type="text" class="form-control" name = "formname" >
     
   </div>
   <div class=col-xs-7>
     <label for="email">E-mail</label>
-    <input type="emal" class="form-control" name = "email" >
+    <input type="emal" class="form-control" name = "formemail" >
     
   </div>
   
@@ -35,10 +23,10 @@
             <label >Gender</label>
     
             <div class="radio">
-        <label><input type="radio" name="gender" value = "f" >Female</label>
+        <label><input type="radio" name="formgender" value = "f" >Female</label>
 
         <div class="radio">
-        <label><input type="radio" name="gender" value = "m">Male</label>
+        <label><input type="radio" name="formgender" value = "m">Male</label>
   </div>
 </div>
 
@@ -47,80 +35,44 @@
     <label for="checkbox"><input type="checkbox" name = "check" > Receive E-mails from US</label>
  </h4>
   </div>
-  <a href="./Users.php"><input class="btn btn-primary" type="submit" value="Submit" name = "submit"></a>
+ <input class="btn btn-primary" type="submit" value="Submit" name = "submit">
   <button type="button" class="btn btn-outline-dark" value="reset" name = "cancel">Cancel</button>
   </div>
 </form>
-      
+</div>
 
-    </html>
-    
-    
-
-<!-- ------------------------------------------------------------------------------ -->
-
-
-<!-- 
 <?php
-$name = $email = $gender = $mailstatus = "";
 
 
-// echo "Name:<br>".$name."<br>";
-// echo "Email:<br>".$email."<br>";
- 
+		$db_host="localhost";
+		$db_user="root";
+		$db_pass="";
+		$db_name="phplab";
+		$con = mysqli_connect($db_host, $db_user, $db_pass);
 
-//Open Connection
-$dbhost = 'localhost';
-   $dbuser = 'root';
-   $dbpass = '';
-   $dbname ='phplab';
-   $conn = mysqli_connect($dbhost, $dbuser, $dbpass);
-   
-   if(! $conn ) {
-      die('Could not connect: ' . mysqli_error($conn));
-   }
-   
-   //echo 'Connected successfully<br>';
+		mysqli_select_db( $con,$db_name );
+		$formName = $formEmail = $formGender =  "";
+		$mailstatus = false;
+		
+	
 
-   //select
-   mysqli_select_db( $conn,$dbname );
+		echo "$formName $formEmail $formGender $mailstatus"; 
+		if(!empty($_POST['submit'])){
+			if( isset($_POST["formname"]) &&  isset($_POST["formemail"]) && isset($_POST["formgender"])){
+				$formName = $_POST['formname'];
+				$formEmail = $_POST['formemail'];
+				$formGender = $_POST['formgender'];
+				$mailstatus = isset($_POST['check']) == 1 ? 1 : 0;
+				$sql = "INSERT INTO user(user_name,user_email,gender,mail_status) VALUES('$formName','$formEmail','$formGender','$mailstatus')";
+				$retval = mysqli_query( $con,$sql );
+				mysqli_close($con);
+				header("Location: Users.php");
+			}
+			}
+ ?>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+			crossorigin="anonymous"></script>
+	</body>
 
-   //create table
-//    $sql = 'CREATE TABLE user( user_id INT NOT NULL AUTO_INCREMENT,
-//    user_name VARCHAR(20) NOT NULL,
-//    user_email  VARCHAR(20) NOT NULL,
-//    gender   INT NOT NULL,
-//    mail_status   INT NOT NULL,
-//    primary key ( user_id ))';
-
-//      $retval = mysqli_query( $conn,$sql );
-   
-//    if(! $retval ) {
-//       die('Could not create table: ' . mysqli_error($conn));
-//    }
-    
-//    echo "<br>Database Table  created successfully\n";
-//    mysqli_close($conn);
-if(!empty($_POST['submit'])){
-  if( isset($_POST["name"]) &&  isset($_POST["email"]) && isset($_POST["gender"]) && isset($_POST["check"])){
-      $name = $_POST['name'];
-      $email = $_POST['email'];
-      $gender = $_POST['gender'];
-      $mailstatus = $_POST['check'];
-      $sql = "INSERT INTO user VALUES ('','$name',
-                  '$email','$gender','$mailstatus')";
-
-        // Check if the query is successful
-      if(mysqli_query($conn, $sql)){
-            //echo "<h3>data stored in a database successfully."
-                //
-
-            // echo nl2br("\n$name\n $email\n "
-            //     . "$gender\n $mailstatus\n ");
-        } else{
-            echo "ERROR: Hush! Sorry $sql. "
-                . mysqli_error($conn);
-        }}}
-    // close connection
-    mysqli_close($conn);
-?> -->
