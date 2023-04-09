@@ -131,7 +131,7 @@ if(!empty($_POST['submit'])){
       $name = $_POST['name'];
       $email = $_POST['email'];
       $gender = $_POST['gender'];
-      $mailstatus = isset($_POST['ckeck']) ? 'Yes' : 'No';
+      $mailstatus = filter_input(INPUT_POST,'check', FILTER_VALIDATE_BOOL);
       $sql = "INSERT INTO user VALUES ('','$name',
                   '$email','$gender','$mailstatus')";
 
