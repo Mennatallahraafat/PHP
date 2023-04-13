@@ -129,7 +129,7 @@ if (isset($_GET['editData'])){
 				$formEmail = $_POST['formemail'];
 				$formGender = $_POST['formgender'];
 				$mailstatus = isset($_POST['check']) == 1 ? 1 : 0;
-				$sql = "INSERT INTO users(user_name,user_email,gender,mail_status) VALUES('$formName','$formEmail','$formGender',$mailstatus)";
+				$sql = "INSERT INTO user(user_name,user_email,gender,mail_status) VALUES('$formName','$formEmail','$formGender',$mailstatus)";
 				$retval = mysqli_query( $con,$sql );
 				mysqli_close($con);
 				header("Location: Users.php");

@@ -44,7 +44,7 @@
   <h4>Gender</h4>
   <p><?php echo "{$row['gender']}";  ?></p>
 <p><?php
-$newMailStatus = $row['mail_status'] == 1 ?  "You will recieve E-mails from us" : "You will Not recieve e-mails from us";
+$newMailStatus = $row['mail_status'] == 1 ?  "You will recieve E-mails from us" : "You will recieve e-mails from us";
   echo "$newMailStatus";
 
 ?></p>
