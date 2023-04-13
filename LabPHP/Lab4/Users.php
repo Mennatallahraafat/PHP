@@ -28,7 +28,8 @@
 					<th>Email</th>
 					<th>Gender</th>
 					<th>Mail Status</th>
-					
+					<th>Action</th>
+
 				</tr>
 
 				<?php
@@ -54,23 +55,41 @@
 					 <td>{$row['user_email']} </td> 
 					 <td>{$row['gender']} </td> 
 					 <td>$newMailStatus </td> 
-					 
+					 <td >
+					<div style='display:flex; justify-content: space-around; color:#7386e2;'>
+					<a  href='info.php?getData={$row['user_id']}'><i class='fa-solid fa-eye '></i></a>
+					<a  href='Form.php?editData={$row['user_id']}'><i class='fa-solid fa-pen '></i></a>
+					 <a href='Users.php?del={$row['user_id']}'><i class='fa-solid fa-trash '></i></a>
+					</div>
+					</td>
 					   </tr>";
 					}
 					
 				  } else {
 					echo "NO results";
 				  }
+				  if (isset($_GET['del'])) {
+					$id = $_GET['del'];
+					echo "delete".$id;
+					$con = mysqli_connect($db_host, $db_user, $db_pass);
+	
+					mysqli_select_db( $con,$db_name );
+					$newSql = "DELETE FROM user WHERE user_id=$id";
+			 mysqli_query( $con,$newSql );
+				
 				 mysqli_close($con);
-			
+				 header('location: Users.php');
+				  }
+	
  ?>
 
 			</table>
 		</div>
 
- 	<script
+		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 			crossorigin="anonymous"></script>
+			<script src="https://kit.fontawesome.com/2ed7666daf.js" crossorigin="anonymous"></script>
 	</body>
 </html>
